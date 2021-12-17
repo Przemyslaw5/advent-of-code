@@ -1,4 +1,4 @@
-package com.adventofcode.common;
+package com.adventofcode.common.ocr;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -171,10 +171,10 @@ public class LetterOcr {
                 {true, true, true, true}}, "Z");
     }
 
-    public static String getLetterFromImage(boolean[][] image) {
+    public static String getLetterFromImage(Letter letterImage) {
         String letter = "";
         for (Map.Entry<boolean[][],String> entry : LETTERS.entrySet())
-            if (Arrays.deepEquals(entry.getKey(), image)) letter = entry.getValue();
+            if (Arrays.deepEquals(entry.getKey(), letterImage.getImage())) letter = entry.getValue();
         return letter;
     }
 }

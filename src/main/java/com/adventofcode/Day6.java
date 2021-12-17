@@ -1,38 +1,43 @@
 package com.adventofcode;
 
+import com.adventofcode.common.Day;
+
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
-public class Day6 {
+public class Day6 extends Day {
 
-    public static long calculateFishNumber(String inputLine, int days) {
+    public Day6() {
+        super(6);
+    }
+
+    public static long calculateFishNumber(IntStream ages, int days) {
         long[] lanternFish = new long[9];
-        for (String number : inputLine.split(",")) {
-            lanternFish[Integer.parseInt(number)]++;
-        }
+
+        ages.forEach(age -> lanternFish[age]++);
 
         for (int i = 0; i < days; i++) {
-            long temp = lanternFish[0];
+            long births = lanternFish[0];
             System.arraycopy(lanternFish, 1, lanternFish, 0, 8);
-            lanternFish[6] += temp;
-            lanternFish[8] = temp;
+            lanternFish[6] += births;
+            lanternFish[8] = births;
         }
         return Arrays.stream(lanternFish).sum();
     }
 
-    public static void partOne(String path) {
-        String inputLine = Utils.getLinesFromFileInResources(path).get(0);
-
-        System.out.println(calculateFishNumber(inputLine, 80));
+    @Override
+    public Object partOne() {
+        IntStream ages = getDataAsIntStream(",");
+        return calculateFishNumber(ages, 80);
     }
 
-    public static void partTwo(String path) {
-        String inputLine = Utils.getLinesFromFileInResources(path).get(0);
-
-        System.out.println(calculateFishNumber(inputLine, 256));
+    @Override
+    public Object partTwo() {
+        IntStream ages = getDataAsIntStream(",");
+        return calculateFishNumber(ages, 256);
     }
 
     public static void main(String[] args) {
-        partOne("day6/taskData.txt");
-        partTwo("day6/taskData.txt");
+        new Day6().solveParts();
     }
 }

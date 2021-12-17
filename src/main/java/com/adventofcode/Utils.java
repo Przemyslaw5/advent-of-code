@@ -1,39 +1,17 @@
 package com.adventofcode;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Utils {
 
-    public static List<Integer> getNumbersFromFileInResources(String path) {
-        List<String> lines = getLinesFromFileInResources(path);
+    public static long convertBinaryToDecimal(long binaryNumber) {
+        long decimalNumber = 0;
+        int multiply = 1;
 
-        List<Integer> numbers = new ArrayList<>();
-        for(String number : lines){
-            numbers.add(Integer.valueOf(number));
+        while (binaryNumber != 0) {
+            decimalNumber += (binaryNumber % 10) * multiply;
+            binaryNumber /= 10;
+            multiply *= 2;
         }
-        return numbers;
-    }
-
-    public static List<Long> getLongsFromFileInResources(String path) {
-        List<String> lines = getLinesFromFileInResources(path);
-
-        List<Long> numbers = new ArrayList<>();
-        for(String number : lines){
-            numbers.add(Long.valueOf(number));
-        }
-        return numbers;
-    }
-
-    public static List<String> getLinesFromFileInResources(String path) {
-        try{
-            return Files.readAllLines(Path.of(Utils.class.getClassLoader().getResource(path).toURI()));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
+        return decimalNumber;
     }
 
 }

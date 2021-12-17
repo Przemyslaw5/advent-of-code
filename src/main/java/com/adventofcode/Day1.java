@@ -1,39 +1,44 @@
 package com.adventofcode;
 
-import java.util.List;
+import com.adventofcode.common.Day;
 
-public class Day1 {
+public class Day1 extends Day {
 
-    public static void partOne(String path) {
-        List<Integer> depths = Utils.getNumbersFromFileInResources(path);
+    public Day1() {
+        super(1);
+    }
+
+    @Override
+    public Object partOne() {
+        int[] depths = getDataAsIntArray();
 
         int result = 0;
-        for(int i = 1; i < depths.size(); i++){
-            if(depths.get(i - 1) < depths.get(i)){
+        for(int i = 1; i < depths.length; i++) {
+            if(depths[i - 1] < depths[i]) {
                 result++;
             }
         }
-        System.out.println(result);
+        return result;
     }
 
-    public static void partTwo(String path) {
-        List<Integer> depths = Utils.getNumbersFromFileInResources(path);
+    @Override
+    public Object partTwo() {
+        int[] depths = getDataAsIntArray();
 
         int result = 0;
         int previousValue = Integer.MAX_VALUE;
 
-        for(int i = 0; i < depths.size() - 2; i++){
-            int sum = depths.get(i) + depths.get(i + 1) + depths.get(i + 2);
+        for(int i = 0; i < depths.length - 2; i++){
+            int sum = depths[i] + depths[i + 1] + depths[i + 2];
             if (sum > previousValue) {
                 result++;
             }
             previousValue = sum;
         }
-        System.out.println(result);
+        return result;
     }
 
     public static void main(String[] args) {
-        partOne("day1/taskData.txt");
-        partTwo("day1/taskData.txt");
+        new Day1().solveParts();
     }
 }

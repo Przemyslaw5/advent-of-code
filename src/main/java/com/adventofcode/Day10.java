@@ -1,8 +1,17 @@
 package com.adventofcode;
 
-import java.util.*;
+import com.adventofcode.common.Day;
 
-public class Day10 {
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+public class Day10 extends Day {
+
+    public Day10() {
+        super(10);
+    }
 
     private static final Map<Character, Character> IN_TO_OUT =
             Map.of('(', ')', '[', ']', '{', '}', '<', '>');
@@ -25,15 +34,12 @@ public class Day10 {
         return 0;
     }
 
-    public static void partOne(String path) {
-        List<String> lines = Utils.getLinesFromFileInResources(path);
-
-        long totalSyntaxErrorScore = lines.stream()
+    @Override
+    public Object partOne() {
+        return getDataAsStringStream()
                 .map(Day10::calculateSyntaxErrorScore)
                 .mapToInt(Integer::intValue)
                 .sum();
-
-        System.out.println(totalSyntaxErrorScore);
     }
 
     public static long calculateScore(String line) {
@@ -48,30 +54,25 @@ public class Day10 {
         }
 
         Collections.reverse(brackets);
-        long totalScore = 0;
-        for (Character bracket : brackets) {
-            totalScore *= 5;
-            totalScore += COMPLETE_SCORE.get(bracket);
-        }
-        return totalScore;
+
+        return brackets.stream()
+                .map(COMPLETE_SCORE::get)
+                .mapToLong(Integer::longValue)
+                .reduce(0, (acc, score) -> (5 * acc + score));
     }
 
-    public static void partTwo(String path) {
-        List<String> lines = Utils.getLinesFromFileInResources(path);
-
-        List<Long> list = lines.stream()
+    @Override
+    public Object partTwo() {
+        List<Long> list = getDataAsStringStream()
                 .filter(line -> calculateSyntaxErrorScore(line) == 0)
                 .map(Day10::calculateScore)
                 .sorted()
                 .toList();
 
-        long score = list.get(list.size() / 2);
-
-        System.out.println(score);
+        return list.get(list.size() / 2);
     }
 
     public static void main(String[] args) {
-        partOne("day10/taskData.txt");
-        partTwo("day10/taskData.txt");
+        new Day10().solveParts();
     }
 }

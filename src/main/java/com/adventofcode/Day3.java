@@ -1,24 +1,23 @@
 package com.adventofcode;
 
+import com.adventofcode.common.Day;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day3 {
+public class Day3 extends Day {
 
-    public static long convertBinaryToDecimal(long binaryNumber) {
-        long decimalNumber = 0;
-        int multiply = 1;
-
-        while (binaryNumber != 0) {
-            decimalNumber += (binaryNumber % 10) * multiply;
-            binaryNumber /= 10;
-            multiply *= 2;
-        }
-        return decimalNumber;
+    public Day3() {
+        super(3);
     }
 
-    public static void partOne(String path) {
-        List<String> lines = Utils.getLinesFromFileInResources(path);
+    public int numberOfOnesAtNthBit(List<String> lines, int n) {
+        return lines.stream().map(line -> line.charAt(n) - '0').mapToInt(Integer::intValue).sum();
+    }
+
+    @Override
+    public Object partOne() {
+        List<String> lines = getDataAsStringList();
 
         int[] mostCommonBits = new int[lines.get(0).length()];
 
@@ -36,21 +35,13 @@ public class Day3 {
             else epsilonRateBin += 1;
         }
 
-        long gammaRateDec = convertBinaryToDecimal(gammaRateBin);
-        long epsilonRateDec = convertBinaryToDecimal(epsilonRateBin);
-        System.out.println(gammaRateDec * epsilonRateDec);
+        long gammaRateDec = Utils.convertBinaryToDecimal(gammaRateBin);
+        long epsilonRateDec = Utils.convertBinaryToDecimal(epsilonRateBin);
+
+        return gammaRateDec * epsilonRateDec;
     }
 
-    public static int numberOfOnesAtNthBit(List<String> lines, int n) {
-        int result = 0;
-
-        for (String line : lines) {
-            result+= line.charAt(n) - '0';
-        }
-        return result;
-    }
-
-    public static long getRatingForPartTwo(List<String> lines, int numberToFind) {
+    public long getRatingForPartTwo(List<String> lines, int numberToFind) {
         int bitNumber = 0;
         while (lines.size() >= 2) {
             int numberOfOnes  = numberOfOnesAtNthBit(lines, bitNumber);
@@ -72,19 +63,19 @@ public class Day3 {
             bitNumber++;
         }
         long binaryValue = Long.parseLong(lines.get(0));
-        return convertBinaryToDecimal(binaryValue);
+        return Utils.convertBinaryToDecimal(binaryValue);
     }
 
-    public static void partTwo(String path) {
-        List<String> lines = Utils.getLinesFromFileInResources(path);
+    @Override
+    public Object partTwo() {
+        List<String> lines = getDataAsStringList();
 
         long oxygenGeneratorRating = getRatingForPartTwo(lines, 1);
         long CO2ScrubberRating = getRatingForPartTwo(lines, 0);
-        System.out.println(oxygenGeneratorRating * CO2ScrubberRating);
+        return oxygenGeneratorRating * CO2ScrubberRating;
     }
 
     public static void main(String[] args) {
-        partOne("day3/taskData.txt");
-        partTwo("day3/taskData.txt");
+        new Day3().solveParts();
     }
 }

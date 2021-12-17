@@ -1,15 +1,18 @@
 package com.adventofcode;
 
-import java.util.List;
+import com.adventofcode.common.Day;
 
-public class Day2 {
+public class Day2 extends Day {
 
-    public static void partOne(String path) {
-        List<String> commands = Utils.getLinesFromFileInResources(path);
+    public Day2() {
+        super(2);
+    }
 
+    @Override
+    public Object partOne() {
         int depth = 0;
         int horizontalPosition = 0;
-        for (String command : commands) {
+        for (String command : getDataAsStringList()) {
             String direction = command.split(" ")[0];
             int value = Integer.parseInt(command.split(" ")[1]);
             switch (direction) {
@@ -18,16 +21,15 @@ public class Day2 {
                 case "forward" -> horizontalPosition += value;
             }
         }
-        System.out.println(horizontalPosition * depth);
+        return horizontalPosition * depth;
     }
 
-    public static void partTwo(String path) {
-        List<String> commands = Utils.getLinesFromFileInResources(path);
-
+    @Override
+    public Object partTwo() {
         int depth = 0;
         int horizontalPosition = 0;
         int aim = 0;
-        for (String command : commands) {
+        for (String command : getDataAsStringList()) {
             String direction = command.split(" ")[0];
             int value = Integer.parseInt(command.split(" ")[1]);
             switch (direction) {
@@ -39,11 +41,10 @@ public class Day2 {
                 }
             }
         }
-        System.out.println(horizontalPosition * depth);
+        return horizontalPosition * depth;
     }
 
     public static void main(String[] args) {
-        partOne("day2/taskData.txt");
-        partTwo("day2/taskData.txt");
+        new Day2().solveParts();
     }
 }

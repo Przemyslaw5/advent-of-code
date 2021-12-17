@@ -1,14 +1,18 @@
 package com.adventofcode;
 
+import com.adventofcode.common.Day;
+
 import java.util.*;
 
-public class Day12 {
+public class Day12 extends Day {
 
-    private static Map<String, List<String>> readInputAndConvertToGraph(String path) {
-        List<String> lines = Utils.getLinesFromFileInResources(path);
+    public Day12() {
+        super(12);
+    }
 
+    private Map<String, List<String>> readInputAndConvertToGraph() {
         Map<String, List<String>> caveGraph = new HashMap<>();
-        for (String line : lines) {
+        for (String line : getDataAsStringList()) {
             String[] cavePath = line.split("-");
             String caveA = cavePath[0];
             String caveB = cavePath[1];
@@ -24,7 +28,7 @@ public class Day12 {
         return caveGraph;
     }
 
-    private static int computePathsNumber(String caveName, Map<String, List<String>> caveGraph, String path, boolean canSmallCaveVisitTwice) {
+    private int computePathsNumber(String caveName, Map<String, List<String>> caveGraph, String path, boolean canSmallCaveVisitTwice) {
         if ("end".equals(caveName))  return 1;
 
         boolean isSmallAndVisitedCave = path.contains("-" + caveName + "-") && caveName.toLowerCase(Locale.ROOT).equals(caveName);
@@ -41,22 +45,21 @@ public class Day12 {
         return result;
     }
 
-    public static void partOne(String path) {
-        Map<String, List<String>> caveGraph = readInputAndConvertToGraph(path);
+    @Override
+    public Object partOne() {
+        Map<String, List<String>> caveGraph = readInputAndConvertToGraph();
 
-        int paths = computePathsNumber("start", caveGraph, "-", false);
-        System.out.println(paths);
+        return computePathsNumber("start", caveGraph, "-", false);
     }
 
-    public static void partTwo(String path) {
-        Map<String, List<String>> caveGraph = readInputAndConvertToGraph(path);
+    @Override
+    public Object partTwo() {
+        Map<String, List<String>> caveGraph = readInputAndConvertToGraph();
 
-        int paths = computePathsNumber("start", caveGraph, "-", true);
-        System.out.println(paths);
+        return computePathsNumber("start", caveGraph, "-", true);
     }
 
     public static void main(String[] args) {
-        partOne("day12/taskData.txt");
-        partTwo("day12/taskData.txt");
+        new Day12().solveParts();
     }
 }

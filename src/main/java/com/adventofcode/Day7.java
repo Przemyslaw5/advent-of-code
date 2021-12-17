@@ -1,30 +1,28 @@
 package com.adventofcode;
 
-import java.util.Arrays;
+import com.adventofcode.common.Day;
+
 import java.util.List;
 
-public class Day7 {
+public class Day7 extends Day {
 
-    public static void partOne(String path) {
-        String inputLine = Utils.getLinesFromFileInResources(path).get(0);
+    public Day7() {
+        super(7);
+    }
 
-        List<Integer> numbers = Arrays.stream(inputLine.split(",")).map(Integer::parseInt).sorted().toList();
+    @Override
+    public Object partOne() {
+        List<Integer> numbers = getDataAsIntStream(",").sorted().boxed().toList();
 
         // Best position is median of data
         int median = numbers.get(numbers.size() / 2);
 
-        long fuel = 0;
-        for (Integer number : numbers) {
-            fuel += Math.abs(number - median);
-        }
-
-        System.out.println(fuel);
+        return numbers.stream().map(number -> Math.abs(number - median)).mapToInt(Integer::intValue).sum();
     }
 
-    public static void partTwo(String path) {
-        String inputLine = Utils.getLinesFromFileInResources(path).get(0);
-
-        List<Integer> numbers = Arrays.stream(inputLine.split(",")).map(Integer::parseInt).sorted().toList();
+    @Override
+    public Object partTwo() {
+        List<Integer> numbers = getDataAsIntStream(",").sorted().boxed().toList();
 
         // Best position is average of data
         int average = (int) numbers.stream().mapToDouble(x -> x).average().orElse(0.0);
@@ -35,11 +33,10 @@ public class Day7 {
             fuel += n * (n + 1) / 2;
         }
 
-        System.out.println(fuel);
+        return fuel;
     }
 
     public static void main(String[] args) {
-        partOne("day7/taskData.txt");
-        partTwo("day7/taskData.txt");
+        new Day7().solveParts();
     }
 }

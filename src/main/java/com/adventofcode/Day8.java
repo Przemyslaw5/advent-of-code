@@ -1,23 +1,14 @@
 package com.adventofcode;
 
+import com.adventofcode.common.Day;
+
 import java.util.*;
+import java.util.stream.IntStream;
 
-public class Day8 {
+public class Day8 extends Day {
 
-    public static void partOne(String path) {
-        List<String> lines = Utils.getLinesFromFileInResources(path);
-
-        int result = 0;
-        for (String line : lines) {
-            String[] digits = line.split(" \\| ")[1].split(" ");
-            for (String digit : digits) {
-                switch (digit.length()) {
-                    case 2, 3, 4, 7 -> result++;
-                }
-            }
-        }
-
-        System.out.println(result);
+    public Day8() {
+        super(8);
     }
 
     public static int calculateDigits(String line) {
@@ -82,16 +73,7 @@ public class Day8 {
         // Find 2 - last element
         numbers[2] = notCalculatedDigits.get(0);
 
-        results.put(numbers[0], 0);
-        results.put(numbers[1], 1);
-        results.put(numbers[2], 2);
-        results.put(numbers[3], 3);
-        results.put(numbers[4], 4);
-        results.put(numbers[5], 5);
-        results.put(numbers[6], 6);
-        results.put(numbers[7], 7);
-        results.put(numbers[8], 8);
-        results.put(numbers[9], 9);
+        IntStream.rangeClosed(0, 9).forEach(elem -> results.put(numbers[elem], elem));
 
         int result = 0;
         for (String number : outputs) {
@@ -104,19 +86,26 @@ public class Day8 {
         return result;
     }
 
-    public static void partTwo(String path) {
-        List<String> lines = Utils.getLinesFromFileInResources(path);
-
-        int sum = 0;
-        for (String line : lines) {
-            sum += calculateDigits(line);
+    @Override
+    public Object partOne() {
+        int result = 0;
+        for (String line : getDataAsStringList()) {
+            String[] digits = line.split(" \\| ")[1].split(" ");
+            for (String digit : digits) {
+                switch (digit.length()) {
+                    case 2, 3, 4, 7 -> result++;
+                }
+            }
         }
+        return result;
+    }
 
-        System.out.println(sum);
+    @Override
+    public Object partTwo() {
+        return getDataAsStringList().stream().map(Day8::calculateDigits).mapToInt(Integer::intValue).sum();
     }
 
     public static void main(String[] args) {
-        partOne("day8/taskData.txt");
-        partTwo("day8/taskData.txt");
+        new Day8().solveParts();
     }
 }
