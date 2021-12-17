@@ -45,6 +45,6 @@ public class Day2 extends Day {
     }
 
     public static void main(String[] args) {
-        new Day2().solveParts();
+        new Day2().solveTasks();
     }
 }

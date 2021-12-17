@@ -112,6 +112,6 @@ public class Day16 extends Day {
     }
 
     public static void main(String[] args) {
-        new Day16().solveExamples();
+        new Day16().solveTasks();
     }
 }

@@ -7,7 +7,7 @@ public class Main {
         for (int dayNumber = 1; dayNumber <= 13; dayNumber++) {
             System.out.println("Day " + dayNumber + ": ");
             Day day = (Day) Class.forName("com.adventofcode.Day" + dayNumber).getDeclaredConstructor().newInstance();
-            day.solveParts();
+            day.solveTasks();
             System.out.println();
         }
     }

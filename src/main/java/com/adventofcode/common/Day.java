@@ -24,7 +24,7 @@ public abstract class Day {
 
     public abstract Object partTwo();
 
-    public void solveParts() {
+    public void solveTasks() {
         isExample = false;
         System.out.println("Part one: " + partOne());
         System.out.println("Part two: " + partTwo());
@@ -34,6 +34,26 @@ public abstract class Day {
         isExample = true;
         System.out.println("Part one: " + partOne());
         System.out.println("Part two: " + partTwo());
+    }
+
+    public String solveTaskPart1() {
+        isExample = false;
+        return partOne().toString();
+    }
+
+    public String solveTaskPart2() {
+        isExample = false;
+        return partTwo().toString();
+    }
+
+    public String solveExamplePart1() {
+        isExample = true;
+        return partOne().toString();
+    }
+
+    public String solveExamplePart2() {
+        isExample = true;
+        return partTwo().toString();
     }
 
     public String getPathToFile() {

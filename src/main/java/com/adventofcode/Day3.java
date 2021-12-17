@@ -35,8 +35,8 @@ public class Day3 extends Day {
             else epsilonRateBin += 1;
         }
 
-        long gammaRateDec = Utils.convertBinaryToDecimal(gammaRateBin);
-        long epsilonRateDec = Utils.convertBinaryToDecimal(epsilonRateBin);
+        long gammaRateDec = Integer.parseInt(String.valueOf(gammaRateBin),2);
+        long epsilonRateDec = Integer.parseInt(String.valueOf(epsilonRateBin), 2);
 
         return gammaRateDec * epsilonRateDec;
     }
@@ -63,7 +63,7 @@ public class Day3 extends Day {
             bitNumber++;
         }
         long binaryValue = Long.parseLong(lines.get(0));
-        return Utils.convertBinaryToDecimal(binaryValue);
+        return Integer.parseInt(String.valueOf(binaryValue), 2);
     }
 
     @Override
@@ -76,6 +76,6 @@ public class Day3 extends Day {
     }
 
     public static void main(String[] args) {
-        new Day3().solveParts();
+        new Day3().solveTasks();
     }
 }

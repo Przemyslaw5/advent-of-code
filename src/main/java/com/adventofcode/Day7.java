@@ -2,6 +2,7 @@ package com.adventofcode;
 
 import com.adventofcode.common.Day;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Day7 extends Day {
@@ -26,17 +27,22 @@ public class Day7 extends Day {
 
         // Best position is average of data
         int average = (int) numbers.stream().mapToDouble(x -> x).average().orElse(0.0);
+        List<Integer> values = List.of(average, average + 1);
 
-        long fuel = 0;
-        for (Integer number : numbers) {
-            long n = Math.abs(number - average);
-            fuel += n * (n + 1) / 2;
+        long bestFuel = Long.MAX_VALUE;
+        for (int value : values) {
+            long fuel = 0;
+            for (Integer number : numbers) {
+                long n = Math.abs(number - value);
+                fuel += n * (n + 1) / 2;
+            }
+            if (fuel < bestFuel) bestFuel = fuel;
         }
 
-        return fuel;
+        return bestFuel;
     }
 
     public static void main(String[] args) {
-        new Day7().solveParts();
+        new Day7().solveTasks();
     }
 }
